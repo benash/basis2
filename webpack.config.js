@@ -22,7 +22,9 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+    }),
     new webpack.HotModuleReplacementPlugin(),
   ]
 }
