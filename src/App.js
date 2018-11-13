@@ -1,5 +1,10 @@
 import React from 'react'
+import Header from './Header'
+import Content from './Content'
 
 export default (props) => {
-  return <h1>Hello, {props.name}</h1>
+  return <div>
+    <Header />
+    <Content />
+  </div>
 }
