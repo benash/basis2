@@ -2,7 +2,7 @@ import React from 'react'
 
 export default (props) => {
   return <header>
-    <h1>Web App Config Generator</h1>
-    <p>No more studying documentation and Getting Started guides for days. No more magic generators.</p>
+    <h1>Config Generator</h1>
+    <p>Create web projects easily. Without magic.</p>
   </header>
 }

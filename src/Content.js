@@ -1,5 +1,11 @@
 import React from 'react'
 
+import Form from './Form'
+import GeneratedCode from './GeneratedCode'
+
 export default (props) => {
-  return <div>Content</div>
+  return <React.Fragment>
+    <Form />
+    <GeneratedCode />
+  </React.Fragment>
 }

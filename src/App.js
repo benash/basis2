@@ -3,8 +3,8 @@ import Header from './Header'
 import Content from './Content'
 
 export default (props) => {
-  return <div>
+  return <React.Fragment>
     <Header />
     <Content />
-  </div>
+  </React.Fragment>
 }
