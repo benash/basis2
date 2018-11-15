@@ -4,8 +4,8 @@ import Form from './Form'
 import GeneratedCode from './GeneratedCode'
 
 export default (props) => {
-  return <React.Fragment>
+  return <main>
     <Form />
     <GeneratedCode />
-  </React.Fragment>
+  </main>
 }

@@ -1,37 +1,52 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600,700|Work+Sans:300,400');
 
-$darkPurple: #2B1740;
-$lightPurple: #9373BF;
-$mediumPurple: #6649A6;
-$lightGrey: lighten(#D9D3D0, 10%);
+$darkPurple: #2b1740;
+$lightPurple: #9373bf;
+$mediumPurple: #6649a6;
+$lightGrey: #f3edea;
 $darkGrey: #403332;
 
 body {
 
   background-color: $lightGrey;
   color: $darkGrey;
+  font-family: 'Source Code Pro', monospace;
 
-  header {
-    background-color: $darkPurple;
-    overflow: hidden;
+  input[type=checkbox] {
+    margin-right: 0.3em;
+  }
+
+  main {
+    display: flex;
     text-align: center;
-    padding: 3em 0;
-    line-height: 1;
+    margin: 2em;
 
-    h1 {
-      color: $lightGrey;
-      margin: 0;
-      font-family: 'Source Code Pro', monospace;
-      font-weight: normal;
-      font-size: 2.1em;
+    h3 {
+      text-align: left;
+      margin-left: 15%;
     }
 
-    p {
-      color: $lightPurple;
-      font-weight: 300;
-      font-family: 'Work Sans', sans-serif;
-      margin-top: 0.6em;
-      margin-bottom: 0;
+    div {
+      width: 50%;
+    }
+
+    form {
+      display: inline-block;
+      label {
+        display: block;
+      }
+    }
+
+    form.webpack-options {
+      text-align: right;
+    }
+
+    form.loaders {
+      text-align: left;
+    }
+
+    .generated-code {
+      text-align: left;
     }
   }
 }
