@@ -1,0 +1,21 @@
+import React from 'react'
+import styled from 'styled-components'
+
+import Highlight from 'react-highlight.js'
+
+const Section = styled.section`
+  text-align: left;
+`
+
+const StyledHighlight = styled(Highlight)`
+  font-size: 0.8em;
+`
+
+export default (props) => {
+  return <Section>
+    <h3>{props.filename}</h3>
+    <StyledHighlight language={props.language}>
+      {props.children}
+    </StyledHighlight>
+  </Section>
+}

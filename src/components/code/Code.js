@@ -1,5 +1,6 @@
 import React from 'react'
-import Highlight from 'react-highlight.js'
+
+import SourceContents from './Section'
 
 export default (props) => {
   const object = {
@@ -19,17 +20,14 @@ export default (props) => {
   const plaintext = 'node_modules\ndist\n'
 
   return <div className="generated-code">
-    <h3>package.json</h3>
-    <Highlight language="json">
+    <SourceContents filename='package.json' language='json'>
       {JSON.stringify(object, null, 2)}
-    </Highlight>
-    <h3>.babelrc</h3>
-    <Highlight language="json">
+    </SourceContents>
+    <SourceContents filename='.babelrc' language='json'>
       {JSON.stringify(babelConfig, null, 2)}
-    </Highlight>
-    <h3>.gitignore</h3>
-    <Highlight language="plaintext">
+    </SourceContents>
+    <SourceContents filename='.gitignore' language='plaintext'>
       {plaintext}
-    </Highlight>
+    </SourceContents>
   </div>
 }

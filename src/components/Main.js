@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Form from './ConfigOptions'
-import GeneratedCode from './GeneratedCode'
+import Form from './Config'
+import GeneratedCode from './code/Code'
 import styled from 'styled-components'
 
 const Main = styled.main`
@@ -16,14 +16,6 @@ const Main = styled.main`
 
   h3 {
     text-align: left;
-    ${'' /* margin-left: 15%; */}
-  }
-
-  .generated-code {
-    text-align: left;
-    pre {
-      font-size: 0.8em;
-    }
   }
 `
 

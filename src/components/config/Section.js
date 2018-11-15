@@ -1,17 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const ConfigForm = styled.div`
+const Section = styled.section`
   form {
     display: inline-block;
   }
 `
 
 export default (props) => {
-  return <ConfigForm>
+  return <Section>
     <h3>{props.title}</h3>
     <form>
       {props.children}
     </form>
-  </ConfigForm>
+  </Section>
 }

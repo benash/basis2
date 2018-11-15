@@ -1,8 +1,8 @@
 import React from 'react'
 
-import ConfigForm from './ConfigForm'
-import LabelledInput from './LabelledInput'
-import LabelledCheckbox from './LabelledCheckbox'
+import ConfigForm from './config/Section'
+import LabelledInput from './config/LabelledInput'
+import LabelledCheckbox from './config/LabelledCheckbox'
 
 export default (props) => {
   return <div>
@@ -13,8 +13,8 @@ export default (props) => {
     </ConfigForm>
 
     <ConfigForm title='Loaders'>
-      <LabelledCheckbox>ES6+</LabelledCheckbox>
-      <LabelledCheckbox>React with JSX</LabelledCheckbox>
+      <LabelledCheckbox> ES6+</LabelledCheckbox>
+      <LabelledCheckbox> React with JSX</LabelledCheckbox>
     </ConfigForm>
   </div>
 }

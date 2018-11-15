@@ -1,19 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600,700|Work+Sans:300,400');
 
-$darkPurple: #2b1740;
-$lightPurple: #9373bf;
-$mediumPurple: #6649a6;
 $lightGrey: #f3edea;
 $darkGrey: #403332;
 
 body {
-
   background-color: $lightGrey;
   color: $darkGrey;
   font-family: 'Source Code Pro', monospace;
-
-  input[type=checkbox] {
-    margin-right: 0.3em;
-  }
-
 }
