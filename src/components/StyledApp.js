@@ -6,7 +6,7 @@ import App from './App'
 import 'html5-boilerplate/dist/css/normalize.css'
 import 'html5-boilerplate/dist/css/main.css'
 import 'highlight.js/styles/vs2015.css'
-import './global.scss'
+import '../global.scss'
 
 const theme = {
   darkPurple: '#2b1740',

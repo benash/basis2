@@ -16,37 +16,4 @@ body {
     margin-right: 0.3em;
   }
 
-  main {
-    display: flex;
-    text-align: center;
-    margin: 2em;
-
-    h3 {
-      text-align: left;
-      margin-left: 15%;
-    }
-
-    div {
-      width: 50%;
-    }
-
-    form {
-      display: inline-block;
-      label {
-        display: block;
-      }
-    }
-
-    form.webpack-options {
-      text-align: right;
-    }
-
-    form.loaders {
-      text-align: left;
-    }
-
-    .generated-code {
-      text-align: left;
-    }
-  }
 }

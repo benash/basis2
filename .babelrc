@@ -4,6 +4,13 @@
       "@babel/preset-react"
     ],
     "plugins": [
-      "babel-plugin-styled-components"
+      "babel-plugin-styled-components",
+      ["react-css-modules", {
+        "filetypes": {
+          ".scss": {
+            "syntax": "postcss-scss"
+          }
+        }
+      }]
     ]
 }
