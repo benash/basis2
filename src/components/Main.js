@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Form from './Config'
-import GeneratedCode from './code/Code'
+import ConfigForm from './config-form'
+import GeneratedCode from './generated-code'
 import styled from 'styled-components'
 
 const Main = styled.main`
@@ -21,7 +21,7 @@ const Main = styled.main`
 
 export default (props) => {
   return <Main>
-    <Form />
+    <ConfigForm />
     <GeneratedCode />
   </Main>
 }

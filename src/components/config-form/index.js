@@ -1,8 +1,8 @@
 import React from 'react'
 
-import ConfigForm from './config/Section'
-import LabelledInput from './config/LabelledInput'
-import LabelledCheckbox from './config/LabelledCheckbox'
+import ConfigForm from './Section'
+import LabelledInput from './LabelledInput'
+import LabelledCheckbox from './LabelledCheckbox'
 
 export default (props) => {
   return <div>
