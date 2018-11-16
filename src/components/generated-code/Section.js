@@ -12,7 +12,7 @@ const StyledHighlight = styled(Highlight)`
 `
 
 export default (props) => {
-  return <Section>
+  return <Section className={props.className}>
     <h3>{props.filename}</h3>
     <StyledHighlight language={props.language}>
       {props.children}
