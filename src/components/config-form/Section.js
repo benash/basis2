@@ -8,7 +8,7 @@ const Section = styled.section`
 `
 
 export default (props) => {
-  return <Section>
+  return <Section className={props.className}>
     <h3>{props.title}</h3>
     <form>
       {props.children}

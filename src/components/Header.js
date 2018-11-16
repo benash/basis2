@@ -24,7 +24,7 @@ const Header = styled.header`
     }
 `
 
-export default (props) => {
+export default () => {
   return <Header>
     <h1>Config Generator</h1>
     <p>Create web projects easily. Without magic.</p>

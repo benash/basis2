@@ -16,7 +16,7 @@ const theme = {
   darkGrey: '#403332',
 }
 
-export default (props) => {
+export default () => {
   return <ThemeProvider theme={theme}>
     <App />
   </ThemeProvider>
