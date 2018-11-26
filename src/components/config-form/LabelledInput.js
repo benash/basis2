@@ -8,6 +8,6 @@ const LabelledInput = styled.label`
 
 export default (props) => {
   return <LabelledInput>
-    {props.children}<input name={props.name} value={props.value} onChange={props.onChange}></input>
+    {props.children}<input name={props.name} value={props.state[props.name]} onChange={props.onChange}></input>
   </LabelledInput>
 }
