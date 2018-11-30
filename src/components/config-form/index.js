@@ -14,10 +14,9 @@ const LeftAlignedSection = styled(Section)`
 `
 
 export default (props) => {
-  const asdf = ({ target, }) => { console.log(target.value) }
   return <Div>
     <Section title='Package Manager'>
-      <select name='packageManager' value={props.state.packageManager} onChange={props.handlePacManChange}>
+      <select name='packageManager' value={props.state.packageManager} onChange={props.onChange}>
         <option value='npm'>NPM</option>
         <option value='yarn'>Yarn</option>
       </select>

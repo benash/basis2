@@ -1,7 +1,7 @@
 import React from 'react'
 
 import ConfigForm from './config-form'
-import GeneratedCode from './generated-code'
+import GeneratedCodeWrapper from './generated-code-wrapper'
 import styled from 'styled-components'
 
 const Main = styled.main`
@@ -29,7 +29,6 @@ export default class extends React.Component {
       webpackOutputFilename: 'bundle.js',
     }
     this.handleFormChange = this.handleFormChange.bind(this)
-    this.handlePacManChange = this.handlePacManChange.bind(this)
   }
 
   handleFormChange({ target, }) {
@@ -38,27 +37,13 @@ export default class extends React.Component {
     })
   }
 
-  packageList() { return [ 'webpack', 'webpack-cli', ] }
-  packageInstallationCommand(pacMan) {
-    console.log(pacMan)
-    return pacMan === 'yarn' ? 'yarn add' : 'npm install'
-  }
-
-  packageInstallationString(pacMan) { return `${this.packageInstallationCommand(pacMan)} ${this.packageList().join(' ')}` }
-
-  handlePacManChange({ target, }) {
-    this.setState({
-      packageInstallationString: this.packageInstallationString(target.value),
-    })
-  }
-
   render() {
     return <Main>
       <section>
-        <ConfigForm onChange={this.handleFormChange} handlePacManChange={this.handlePacManChange} state={this.state}/>
+        <ConfigForm onChange={this.handleFormChange} state={this.state}/>
       </section>
       <section>
-        <GeneratedCode state={this.state} packageInstallationString={this.state.packageInstallationString} />
+        <GeneratedCodeWrapper state={this.state} />
       </section>
     </Main>
   }

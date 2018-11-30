@@ -5,12 +5,6 @@ import Section from './Section'
 
 export default class extends React.Component {
   render() {
-    const PreWrapped = styled(Section)`
-      code {
-        white-space: pre-wrap;
-      }
-    `
-
     const webpackConfig = `const path = require('path')
 
   module.exports = {
@@ -21,8 +15,10 @@ export default class extends React.Component {
     },
   }`
 
+    const pack = `$ ${this.props.packageInstallationString}`
+
     return <div className='generated-code'>
-      <Section filename='package installation' language='console'>$ {this.props.packageInstallationString}</Section>
+      <Section filename='package installation' language='console'>{pack}</Section>
       <Section filename='webpack.config.js' language='js'>{webpackConfig}</Section>
     </div>
   }

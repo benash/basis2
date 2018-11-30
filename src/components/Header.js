@@ -15,6 +15,7 @@ const Header = styled.header`
       font-weight: normal;
       font-size: 2.1em;
     }
+
     p {
       color: ${props => props.theme.lightPurple};
       font-weight: 300;
