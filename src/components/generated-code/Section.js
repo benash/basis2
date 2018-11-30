@@ -15,7 +15,7 @@ export default (props) => {
   return <Section className={props.className}>
     <h3>{props.filename}</h3>
     <StyledHighlight language={props.language}>
-      {props.children}
+      {React.Children.toArray(props.children).join('')}
     </StyledHighlight>
   </Section>
 }

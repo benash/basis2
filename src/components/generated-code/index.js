@@ -15,10 +15,8 @@ export default class extends React.Component {
     },
   }`
 
-    const pack = `$ ${this.props.packageInstallationString}`
-
     return <div className='generated-code'>
-      <Section filename='package installation' language='console'>{pack}</Section>
+      <Section filename='package installation' language='console'>$ {this.props.packageInstallationString}</Section>
       <Section filename='webpack.config.js' language='js'>{webpackConfig}</Section>
     </div>
   }
