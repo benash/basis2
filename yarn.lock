@@ -252,6 +252,28 @@
     "@babel/helper-remap-async-to-generator" "^7.1.0"
     "@babel/plugin-syntax-async-generators" "^7.0.0"
 
+"@babel/plugin-proposal-class-properties@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.1.0.tgz#9af01856b1241db60ec8838d84691aa0bd1e8df4"
+  integrity sha512-/PCJWN+CKt5v1xcGn4vnuu13QDoV+P7NcICP44BoonAJoPSGwVkgrXihFIQGiEjjPlUDBIw1cM7wYFLARS2/hw==
+  dependencies:
+    "@babel/helper-function-name" "^7.1.0"
+    "@babel/helper-member-expression-to-functions" "^7.0.0"
+    "@babel/helper-optimise-call-expression" "^7.0.0"
+    "@babel/helper-plugin-utils" "^7.0.0"
+    "@babel/helper-replace-supers" "^7.1.0"
+    "@babel/plugin-syntax-class-properties" "^7.0.0"
+
+"@babel/plugin-proposal-decorators@^7.1.6":
+  version "7.1.6"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-decorators/-/plugin-proposal-decorators-7.1.6.tgz#460c31edbd01953efe45d491583b3ec31661d689"
+  integrity sha512-U42f8KhUbtlhUDyV/wK4Rq/wWh8vWyttYABckG/v0vVnMPvayOewZC/83CbVdmyP+UhEqI368FEQ7hHMfhBpQA==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+    "@babel/helper-replace-supers" "^7.1.0"
+    "@babel/helper-split-export-declaration" "^7.0.0"
+    "@babel/plugin-syntax-decorators" "^7.1.0"
+
 "@babel/plugin-proposal-json-strings@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-json-strings/-/plugin-proposal-json-strings-7.0.0.tgz#3b4d7b5cf51e1f2e70f52351d28d44fc2970d01e"
@@ -289,6 +311,20 @@
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-async-generators/-/plugin-syntax-async-generators-7.0.0.tgz#bf0891dcdbf59558359d0c626fdc9490e20bc13c"
   integrity sha512-im7ged00ddGKAjcZgewXmp1vxSZQQywuQXe2B1A7kajjZmDeY/ekMPmWr9zJgveSaQH0k7BcGrojQhcK06l0zA==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+
+"@babel/plugin-syntax-class-properties@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-class-properties/-/plugin-syntax-class-properties-7.0.0.tgz#e051af5d300cbfbcec4a7476e37a803489881634"
+  integrity sha512-cR12g0Qzn4sgkjrbrzWy2GE7m9vMl/sFkqZ3gIpAQdrvPDnLM8180i+ANDFIXfjHo9aqp0ccJlQ0QNZcFUbf9w==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+
+"@babel/plugin-syntax-decorators@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-decorators/-/plugin-syntax-decorators-7.1.0.tgz#2fa7c1a7905a299c9853ebcef340306675f9cbdc"
+  integrity sha512-uQvRSbgQ0nQg3jsmIixXXDCgSpkBolJ9X7NYThMKCcjvE8dN2uWJUzTUNNAeuKOjARTd+wUQV0ztXpgunZYKzQ==
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
@@ -3037,6 +3073,13 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
+hoist-non-react-statics@^3.0.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.2.0.tgz#d21b9fc72b50fdc38c5d88f6e2c52f2c2dbe5ee2"
+  integrity sha512-3IascCRfaEkbmHjJnUxWSspIUE1okLPjGTMVXW8zraUo1t3yg1BadKAxAGILHwgoBzmMnzrgeeaDGBvpuPz6dA==
+  dependencies:
+    react-is "^16.3.2"
+
 hosted-git-info@^2.1.4:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
@@ -4081,6 +4124,19 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   dependencies:
     minimist "0.0.8"
 
+mobx-react@^5.4.2:
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-5.4.2.tgz#53db594dbb44752c15b53c355babaa94a6af5934"
+  integrity sha512-alSN0KDAAOb1OkYujfoJjjk0JWxWRKO4sLGB4hN2CuvaJMrlj7bhGQe7CBMJvEFNjtJRbhJcquYVjQ3rrH2zQQ==
+  dependencies:
+    hoist-non-react-statics "^3.0.0"
+    react-lifecycles-compat "^3.0.2"
+
+mobx@^5.6.0:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.6.0.tgz#e381c357e0ed7685a99a896455ecc66ff5ab84ee"
+  integrity sha512-xrA0tBnSMANXCDjS2W/6YTasesA8mkg9o+v/Bw/OcbXaRVE6/soVwDMWIh7A6TwMDY4tYQprQJZ5WQN1TRSb3A==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -5003,10 +5059,15 @@ react-highlight.js@^1.0.7:
     highlight.js "^9.3.0"
     prop-types "^15.6.0"
 
-react-is@^16.6.0:
+react-is@^16.3.2, react-is@^16.6.0:
   version "16.6.3"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.3.tgz#d2d7462fcfcbe6ec0da56ad69047e47e56e7eac0"
   integrity sha512-u7FDWtthB4rWibG/+mFbVd5FvdI20yde86qKGx4lVUTWmPlSWQ4QxbBIrrs+HnXGbxOUlUzTAP/VDmvCwaP2yA==
+
+react-lifecycles-compat@^3.0.2:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+  integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
 react@^16.6.1:
   version "16.6.3"

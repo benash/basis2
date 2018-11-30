@@ -1,8 +1,9 @@
 import React from 'react'
 
 import ConfigForm from './config-form'
-import GeneratedCodeWrapper from './generated-code-wrapper'
+import GeneratedCode from './generated-code'
 import styled from 'styled-components'
+import Config from '../stores/config';
 
 const Main = styled.main`
   display: flex;
@@ -22,28 +23,16 @@ const Main = styled.main`
 export default class extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      packageManager: 'yarn',
-      webpackEntry: './src/index.js',
-      webpackOutputPath: 'dist',
-      webpackOutputFilename: 'bundle.js',
-    }
-    this.handleFormChange = this.handleFormChange.bind(this)
-  }
-
-  handleFormChange({ target, }) {
-    this.setState({
-      [target.name]: target.value,
-    })
+    this.store = new Config()
   }
 
   render() {
     return <Main>
       <section>
-        <ConfigForm onChange={this.handleFormChange} state={this.state}/>
+        <ConfigForm store={this.store}/>
       </section>
       <section>
-        <GeneratedCodeWrapper state={this.state} />
+        <GeneratedCode store={this.store} />
       </section>
     </Main>
   }

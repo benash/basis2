@@ -3,7 +3,9 @@ import styled from 'styled-components'
 
 import Section from './Section'
 import LabelledInput from './LabelledInput'
+import Select from './Select'
 import LabelledCheckbox from './LabelledCheckbox'
+import { observer } from 'mobx-react';
 
 const Div = styled.div`
   display: inline-block;
@@ -13,18 +15,18 @@ const LeftAlignedSection = styled(Section)`
   text-align: left;
 `
 
-export default (props) => {
+export default observer((props) => {
   return <Div>
     <Section title='Package Manager'>
-      <select name='packageManager' value={props.state.packageManager} onChange={props.onChange}>
+      <Select store={props.store} name='packageManager'>
         <option value='npm'>NPM</option>
         <option value='yarn'>Yarn</option>
-      </select>
+      </Select>
     </Section>
     <Section title='Webpack Options'>
-      <LabelledInput onChange={props.onChange} state={props.state} name='webpackEntry'>Entry file: </LabelledInput>
-      <LabelledInput onChange={props.onChange} state={props.state} name='webpackOutputPath'>Output path: </LabelledInput>
-      <LabelledInput onChange={props.onChange} state={props.state} name='webpackOutputFilename'>Output filename: </LabelledInput>
+      <LabelledInput store={props.store} name='webpackEntry'>Entry file: </LabelledInput>
+      <LabelledInput store={props.store} name='webpackOutputPath'>Output path: </LabelledInput>
+      <LabelledInput store={props.store} name='webpackOutputFilename'>Output Filename: </LabelledInput>
     </Section>
 
     {/* <LeftAlignedSection title='Loaders'> */}
@@ -32,4 +34,4 @@ export default (props) => {
       {/* <LabelledCheckbox> React with JSX</LabelledCheckbox> */}
     {/* </LeftAlignedSection> */}
   </Div>
-}
+})
