@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import { observer } from 'mobx-react';
 
 const LabelledInput = styled.label`
   display: block;
   text-align: right;
 `
 
-export default (props) => {
+export default observer((props) => {
   return <LabelledInput>
     {props.children}
     <input
@@ -15,4 +16,4 @@ export default (props) => {
       onChange={({ target }) => props.store[props.name] = target.value}>
     </input>
   </LabelledInput>
-}
+})
