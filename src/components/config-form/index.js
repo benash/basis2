@@ -18,7 +18,7 @@ const LeftAlignedSection = styled(Section)`
 export default observer((props) => {
   return <Div>
     <Section title='Package Manager'>
-      <Select store={props.store} name='packageManager'>
+      <Select store={props.store} name='packageManagerName'>
         <option value='npm'>NPM</option>
         <option value='yarn'>Yarn</option>
       </Select>
