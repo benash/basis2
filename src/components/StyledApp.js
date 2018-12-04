@@ -16,8 +16,9 @@ const theme = {
   darkGrey: '#403332',
 }
 
-export default () => {
+export default function StyledApp() {
   return <ThemeProvider theme={theme}>
     <App />
   </ThemeProvider>
 }
+

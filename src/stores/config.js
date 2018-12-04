@@ -9,6 +9,7 @@ export default class Config {
   @observable webpackEntry = './src/index.js'
   @observable webpackOutputPath = 'dist'
   @observable webpackOutputFilename = 'bundle.js'
+  @observable useBabel = false
 
   @computed get devDependencies() { return ['webpack', 'webpack-cli',] }
   @computed get dependencies() { return [] }
@@ -30,5 +31,51 @@ module.exports = {
     path: path.resolve(__dirname, '${this.webpackOutputPath}'),
   },
 }`
+  }
+  
+  @computed get transpiler() {
+    if (this.useBabel) {
+      return new BabelTranspiler()
+    }
+
+    return new NoopTranspiler()
+  }
+}
+
+class JsonConfigFile {
+  constructor({ filename, contents, }) {
+    this.filename = filename
+    this.contents = contents
+  }
+
+  get toString() {
+    return JSON.stringify(this.contents, null, 2)
+  }
+}
+
+class BabelTranspiler {
+  devDependencies = [ 'babel-loader', '@babel/core', '@babel/preset-env', 'webpack', ]
+  dependencies = []
+
+  config = new JsonConfigFile({
+    filename: '.babelrc',
+    contents: {
+      presets: [
+        '@babel/preset-env', 
+      ],
+    },
+  })
+}
+
+class NoopTranspiler {
+  devDependencies = []
+  dependencies = []
+
+  config = new NoopConfigFile()
+}
+
+class NoopConfigFile {
+  get toString() {
+    return ''
   }
 }

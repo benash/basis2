@@ -1,21 +1,25 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import Highlight from 'react-highlight.js'
+import Highlight from '../Highlight'
 
-const Section = styled.section`
+Section.propTypes = {
+  className: PropTypes.string,
+  filename: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
+  children: PropTypes.node,
+}
+
+function Section(props) {
+  return <section className={props.className}>
+    <h3>{props.filename}</h3>
+    <Highlight language={props.language}>
+      {props.children}
+    </Highlight>
+  </section>
+}
+
+export default styled(Section)`
   text-align: left;
 `
-
-const StyledHighlight = styled(Highlight)`
-  font-size: 0.8em;
-`
-
-export default (props) => {
-  return <Section className={props.className}>
-    <h3>{props.filename}</h3>
-    <StyledHighlight language={props.language}>
-      {React.Children.toArray(props.children).join('')}
-    </StyledHighlight>
-  </Section>
-}

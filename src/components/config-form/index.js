@@ -23,6 +23,9 @@ export default observer((props) => {
         <option value='yarn'>Yarn</option>
       </Select>
     </Section>
+    <LeftAlignedSection title='Transpilation'>
+      <LabelledCheckbox store={props.store} name='useBabel'> Use Babel</LabelledCheckbox>
+    </LeftAlignedSection>
     <Section title='Webpack Options'>
       <LabelledInput store={props.store} name='webpackEntry'>Entry file: </LabelledInput>
       <LabelledInput store={props.store} name='webpackOutputPath'>Output path: </LabelledInput>

@@ -1,17 +1,17 @@
 import React from 'react'
-import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
-const Section = styled.section`
-  form {
-    display: inline-block;
-  }
-`
-
-export default (props) => {
-  return <Section className={props.className}>
+export default function Section(props) {
+  return <section className={props.className}>
     <h3>{props.title}</h3>
     <form>
       {props.children}
     </form>
-  </Section>
+  </section>
+}
+
+Section.propTypes = {
+  className: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node,
 }

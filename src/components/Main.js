@@ -5,7 +5,7 @@ import GeneratedCode from './generated-code'
 import styled from 'styled-components'
 import Config from '../stores/config';
 
-const Main = styled.main`
+const StyledMain = styled.main`
   display: flex;
   text-align: center;
   margin: 0;
@@ -20,20 +20,20 @@ const Main = styled.main`
   }
 `
 
-export default class extends React.Component {
+export default class Main extends React.Component {
   constructor(props) {
     super(props)
     this.store = new Config()
   }
 
   render() {
-    return <Main>
+    return <StyledMain>
       <section>
         <ConfigForm store={this.store}/>
       </section>
       <section>
         <GeneratedCode store={this.store} />
       </section>
-    </Main>
+    </StyledMain>
   }
 }
