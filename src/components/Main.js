@@ -3,7 +3,7 @@ import React from 'react'
 import ConfigForm from './config-form'
 import GeneratedCode from './generated-code'
 import styled from 'styled-components'
-import Config from '../stores/config';
+import ConfigStore from '../config/ConfigStore'
 
 const StyledMain = styled.main`
   display: flex;
@@ -23,7 +23,7 @@ const StyledMain = styled.main`
 export default class Main extends React.Component {
   constructor(props) {
     super(props)
-    this.store = new Config()
+    this.store = new ConfigStore()
   }
 
   render() {

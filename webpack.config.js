@@ -6,10 +6,13 @@ const webpack = require('webpack')
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   devServer: {
     contentBase: './dist',
     hot: true,
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx"]
   },
   output: {
     filename: 'main.js',
@@ -17,9 +20,12 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader', },
+      { test: /\.(t)sx?$/, use: { loader: 'awesome-typescript-loader' } },
       { test: /\.scss$/, use: [ 'style-loader', 'css-loader', 'sass-loader', ], },
       { test: /\.css$/, use: [ 'style-loader', 'css-loader', ], },
+      // addition - add source-map support
+      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader', },
     ],
   },
   plugins: [
