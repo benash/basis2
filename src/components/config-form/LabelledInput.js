@@ -12,8 +12,8 @@ export default observer((props) => {
     {props.children}
     <input
       name={props.name}
-      value={props.store[props.name]}
-      onChange={({ target }) => props.store[props.name] = target.value}>
+      value={props.container[props.name]}
+      onChange={({ target }) => props.container[props.name] = target.value}>
     </input>
   </LabelledInput>
 })

@@ -12,8 +12,8 @@ export default observer((props) => {
     <input
       type='checkbox'
       name={props.name}
-      value={props.store[props.name]}
-      onChange={({ target }) => props.store[props.name] = target.checked }>
+      checked={props.container[props.name]}
+      onChange={({ target }) => props.container[props.name] = target.checked }>
     </input>
     {props.children}
   </LabelledCheckbox>

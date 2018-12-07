@@ -1,23 +1,40 @@
 const singleIndent = '  '
+const indentFor = (level: number) => singleIndent.repeat(level)
 
-export const serialize = (o: object) => `{\n${serializeInner(o, 1)}}\n`
+export const serializeObject = (o: object, level: number) =>
+  '{\n' + serializeObjectEntries(o, level + 1) + indentFor(level) + '}'
 
-function serializeEntry([key, val], level: number) {
-  const indent = singleIndent.repeat(level)
-  return `${indent}${key}: ${serializeRec(val, level + 1)},\n`
-}
+const serializeObjectEntries = (o: object, level: number) =>
+  Object.entries(o).map(entry => serializeObjectEntry(entry, level)).join('')
 
-function serializeInner(o: object, level: number) {
-  return Object.entries(o).map(entry => serializeEntry(entry, level)).join('')
-}
+const serializeObjectEntry = ([key, val], level: number) =>
+  `${indentFor(level)}${key}: ${serializeAny(val, level)},\n`
 
-function serializeRec(a: any, level: number) {
+const serializeArray = (a: Array<any>, level: number) =>
+  '[\n' + serializeArrayElements(a, level + 1) + indentFor(level) + ']'
+
+const serializeArrayElements = (a: Array<any>, level: number) =>
+  a.map(element => serializeArrayElement(element, level)).join('')
+
+const serializeArrayElement = (val: any, level: number) =>
+  `${indentFor(level)}${serializeAny(val, level)},\n`
+
+const quote = (s: string) => `'${s}'`
+
+function serializeAny(a: any, level: number) {
+  if (a instanceof RegExp) {
+    return a
+  }
   if (typeof a === 'string') {
-    return `'${a}'`
+    return quote(a)
   }
-  else if (a instanceof Object) {
-    const endIndent = singleIndent.repeat(level - 1)
-    return '{\n' + serializeInner(a, level) + `${endIndent}}`
+  if (a instanceof Array) {
+    return serializeArray(a, level)
   }
-  return `${a}`
+
+  const endIndent = singleIndent.repeat(level)
+  if (a instanceof Object) {
+    return serializeObject(a, level)
+  }
+  return a
 }

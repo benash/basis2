@@ -1,6 +1,7 @@
 import { observable, computed, } from 'mobx'
 import { YarnPackageManager, NpmPackageManager, NoopPackageManager, } from './PackageManager'
-import { WebpackBuildSystem, NoopBuildSystem, WebpackConfig, } from './BuildSystem'
+import { WebpackBuildSystem, NoopBuildSystem, } from './build-system'
+import { WebpackConfig } from './build-system/WebpackConfig'
 import { BabelTranspiler, NoopTranspiler } from './Transpiler'
 import { ConfigFile } from './ConfigFile'
 
@@ -8,22 +9,28 @@ export default class ConfigStore {
   id = Math.random()
   @observable packageManagerName = 'yarn'
   @observable useWebpack = true
-  @observable webpackEntry = './src/index.js'
-  @observable webpackOutputPath = 'dist'
-  @observable webpackOutputFilename = 'bundle.js'
+  @observable webpackConfig: WebpackConfig = {
+    entry: './src/index.js',
+    outputPath: 'dist',
+    outputFilename: 'bundle.js',
+    loadCss: true,
+  }
   @observable useBabel = false
 
   @computed get buildSystem() {
     if (this.useWebpack) {
-      const config = new WebpackConfig(this.webpackEntry, this.webpackOutputFilename, this.webpackOutputPath)
-      return new WebpackBuildSystem(config)
+      return new WebpackBuildSystem(this.webpackConfig)
     }
 
     return new NoopBuildSystem()
   }
 
   @computed get devDependencies() {
-    return this.buildSystem.devDependencies.concat(this.transpiler.devDependencies)
+    return [
+      this.buildSystem,
+      this.transpiler,
+    ].map(x => x.devDependencies)
+    .reduce((prev, cur) => prev.concat(cur))
   }
 
   @computed get packageManager() {

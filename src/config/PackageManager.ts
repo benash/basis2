@@ -29,7 +29,7 @@ export class YarnPackageManager extends PackageManager {
 export class NpmPackageManager extends PackageManager {
   configs() {
     return [
-      new PackageManagerConfigFile(`npm install -D ${this.devDependencies.join(' ')}`)
+      new PackageManagerConfigFile(`npm install ${this.devDependencies.join(' ')} --save-dev`)
     ]
   }
 }

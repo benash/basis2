@@ -24,17 +24,13 @@ export default observer((props) => {
       </Select>
     </Section>
     <LeftAlignedSection title='Transpilation'>
-      <LabelledCheckbox store={props.store} name='useBabel'> Use Babel</LabelledCheckbox>
+      <LabelledCheckbox container={props.store} name='useBabel'> Use Babel</LabelledCheckbox>
     </LeftAlignedSection>
     <Section title='Webpack Options'>
-      <LabelledInput store={props.store} name='webpackEntry'>Entry file: </LabelledInput>
-      <LabelledInput store={props.store} name='webpackOutputPath'>Output path: </LabelledInput>
-      <LabelledInput store={props.store} name='webpackOutputFilename'>Output Filename: </LabelledInput>
+      <LabelledInput container={props.store.webpackConfig} name='entry'>Entry file: </LabelledInput>
+      <LabelledInput container={props.store.webpackConfig} name='outputPath'>Output path: </LabelledInput>
+      <LabelledInput container={props.store.webpackConfig} name='outputFilename'>Output Filename: </LabelledInput>
+      <LabelledCheckbox container={props.store.webpackConfig} name='loadCss'> Load CSS</LabelledCheckbox>
     </Section>
-
-    {/* <LeftAlignedSection title='Loaders'> */}
-      {/* <LabelledCheckbox> ES6+</LabelledCheckbox> */}
-      {/* <LabelledCheckbox> React with JSX</LabelledCheckbox> */}
-    {/* </LeftAlignedSection> */}
   </Div>
 })
