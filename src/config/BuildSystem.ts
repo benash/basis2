@@ -1,6 +1,7 @@
 import { HasDependencies, HasConfigs, } from './interfaces';
 import { ConfigFile } from './ConfigFile';
 import { object } from 'prop-types';
+import { serialize } from './Serializers';
 
 interface BuildSystem extends HasDependencies, HasConfigs {}
 
@@ -31,30 +32,6 @@ export class WebpackConfig {
     public outputFilename: string,
     public outputPath: string,
   ) { }
-}
-
-const singleIndent = '  '
-
-const serialize = (o: object) => `{\n${serializeInner(o, 1)}}\n`
-
-function serializeInner(o: object, level: number) {
-  const indent = singleIndent.repeat(level)
-  return Object.entries(o).map(entry =>
-    `${indent}${entry[0]}: ${serializeRec(entry[1], level + 1)}`
-  ).join('\n') + '\n'
-}
-
-function serializeRec(a: any, level: number) {
-  const endIndent = singleIndent.repeat(level - 1)
-
-  if (typeof a === 'string') {
-    return `'${a}',`
-  }
-  else if (a instanceof Object) {
-    return '{\n' + serializeInner(a, level) + `${endIndent}},`
-  }
-
-  return `${a},`
 }
 
 class JsConfigFile implements ConfigFile {
