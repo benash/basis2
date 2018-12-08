@@ -22,11 +22,8 @@ const serializeArrayElement = (val: any, level: number) =>
 const quote = (s: string) => `'${s}'`
 
 function serializeAny(a: any, level: number) {
-  if (a instanceof RegExp) {
+  if (a instanceof RegExp || typeof a === 'string') {
     return a
-  }
-  if (typeof a === 'string') {
-    return quote(a)
   }
   if (a instanceof Array) {
     return serializeArray(a, level)

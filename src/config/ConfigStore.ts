@@ -1,9 +1,21 @@
 import { observable, computed, } from 'mobx'
 import { YarnPackageManager, NpmPackageManager, NoopPackageManager, } from './PackageManager'
 import { WebpackBuildSystem, NoopBuildSystem, } from './build-system'
-import { WebpackConfig } from './build-system/WebpackConfig'
 import { BabelTranspiler, NoopTranspiler } from './Transpiler'
 import { ConfigFile } from './ConfigFile'
+
+export interface WebpackConfig {
+  entry: string
+  outputFilename: string
+  outputPath: string
+  loadCss: boolean
+  loadImages: boolean
+  loadFonts: boolean
+  loadCsv: boolean
+  loadXml: boolean
+  useCleanPlugin: boolean
+  useHtmlPlugin: boolean
+}
 
 export default class ConfigStore {
   id = Math.random()
@@ -13,7 +25,13 @@ export default class ConfigStore {
     entry: './src/index.js',
     outputPath: 'dist',
     outputFilename: 'bundle.js',
-    loadCss: true,
+    loadCss: false,
+    loadImages: false,
+    loadFonts: false,
+    loadCsv: false,
+    loadXml: false,
+    useCleanPlugin: false,
+    useHtmlPlugin: false,
   }
   @observable useBabel = false
 
