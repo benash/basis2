@@ -1,5 +1,5 @@
 import { merge as _merge } from '../utils'
-import { serializeObject } from './Serializers'
+import { serialize } from './Serializers'
 import { Require } from './Require'
 
 interface PartialJsConfigFileI {
@@ -19,7 +19,7 @@ export class PartialJsConfigFile {
 
   serialize() {
     return this.partialFile.requires.map(r => r.serialize()).join('\n') +
-      '\n\nmodule.exports = ' + serializeObject(this.partialFile.configObj, 0)
+      '\n\nmodule.exports = ' + serialize(this.partialFile.configObj)
   }
 
   static empty() {
