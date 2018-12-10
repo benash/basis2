@@ -54,42 +54,6 @@ class Indent {
 export const serialize = (a: any) =>
   serializeAny(a, Indent.multiLine(1))
 
-const serializeObject = (o: object, indent: Indent) => {
-  const singleLine = serializeFixedIndentObject(o, Indent.SingleLinePadded)
-  
-  if (singleLine.length <= singleLineMaxSize) {
-    return singleLine
-  }
-
-  return serializeFixedIndentObject(o, indent)
-}
-
-const serializeObjectEntries = (o: object, indent: Indent) =>
-  Object.entries(o).map(entry => serializeObjectEntry(entry, indent))
-
-const serializeObjectEntry = ([key, val], indent: Indent) =>
-  `${key}: ${serializeAny(val, indent)}`
-
-const serializeArray = (a: Array<any>, indent: Indent) => {
-  const singleLine = serializeFixedIndentArray(a, Indent.SingleLine)
-
-  if (singleLine.length <= singleLineMaxSize) {
-    return singleLine
-  }
-
-  return serializeFixedIndentArray(a, indent)
-}
-
-const serializeFixedIndentObject = (o: object, indent: Indent) => {
-  return indent.serializeElements(Surround.Object, serializeObjectEntries(o, indent.increase()))
-}
-const serializeFixedIndentArray = (a: any[], indent: Indent) => {
-  return indent.serializeElements(Surround.Array, serializeArrayElements(a, indent.increase()))
-}
-
-const serializeArrayElements = (a: Array<any>, indent: Indent) =>
-  a.map(element => serializeAny(element, indent))
-
 function serializeAny(a: any, indent: Indent) {
   if (a instanceof RegExp) {
     return a
@@ -101,4 +65,25 @@ function serializeAny(a: any, indent: Indent) {
     return serializeObject(a, indent)
   }
   return a
+}
+
+const serializeArray = (arr: Array<any>, indent: Indent) =>
+  serializeContainer(arr, Surround.Array, indent, (a, ind) => a.map(el => serializeAny(el, ind)))
+
+const serializeObject = (o: object, indent: Indent) =>
+  serializeContainer(o, Surround.Object, indent, (o, ind) =>
+    Object.entries(o).map(([key, val]) => `${key}: ${serializeAny(val, ind)}`))
+
+function serializeContainer(container: any, surround: Surround, indent: Indent, fn: (c, ind) => string[] ) {
+  const singleLine = serializeFixedIndentContainer(container, surround, Indent.SingleLine, fn)
+
+  if (singleLine.length <= singleLineMaxSize) {
+    return singleLine
+  }
+
+  return serializeFixedIndentContainer(container, surround, indent, fn)
+}
+
+const serializeFixedIndentContainer = (c: any, surround: Surround, indent: Indent, fn: (c, indent: Indent) => string[]) => {
+  return indent.serializeElements(surround, fn(c, indent.increase()))
 }
