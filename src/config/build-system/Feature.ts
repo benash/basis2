@@ -1,7 +1,6 @@
-import { PartialJsConfigFile } from '../PartialJsConfigFile'
+import { PartialJsConfigFile, Literal, RegExpLiteral } from '../PartialJsConfigFile'
 import { WebpackConfig } from '../ConfigStore';
 import { PlainRequire, Require, CamelizedRequire } from '../Require'
-import { quote } from '../../utils'
 
 export abstract class Feature {
   isEnabled: boolean
@@ -33,10 +32,10 @@ class WebpackBaseFeature implements Feature {
     return new PartialJsConfigFile({
       requires: [new PlainRequire('path')],
       configObj: {
-        entry: quote(this.config.entry),
+        entry: this.config.entry,
         output: {
-          filename: quote(this.config.outputFilename),
-          path: `path.resolve(__dirname, ${quote(this.config.outputPath)})`
+          filename: this.config.outputFilename,
+          path: new Literal(`path.resolve(__dirname, '${this.config.outputPath}')`)
         }
       }
     })
@@ -44,7 +43,7 @@ class WebpackBaseFeature implements Feature {
 }
 
 abstract class WebpackRuleFeature implements Feature {
-  test: RegExp
+  test: RegExpLiteral
   use: string[]
   isEnabled: boolean
   devDependencies: string[]
@@ -57,7 +56,7 @@ abstract class WebpackRuleFeature implements Feature {
           rules: [
             {
               test: this.test,
-              use: this.use.map(u => `'${u}'`)
+              use: this.use
             }
           ]
         }
@@ -72,7 +71,7 @@ class WebpackCssFeature extends WebpackRuleFeature {
   get isEnabled() { return this.webpackConfig.loadCss }
 
   devDependencies = ['style-loader', 'css-loader']
-  test = /\.css$/
+  test = new RegExpLiteral(/\.css$/)
   use = ['style-loader', 'css-loader']
 }
 
@@ -82,7 +81,7 @@ class WebpackImagesFeature extends WebpackRuleFeature {
   get isEnabled() { return this.config.loadImages }
 
   devDependencies = ['file-loader']
-  test = /\.(png|svg|jpg|gif)$/
+  test = new RegExpLiteral(/\.(png|svg|jpg|gif)$/)
   use = ['file-loader']
 }
 
@@ -92,7 +91,7 @@ class WebpackFontsFeature extends WebpackRuleFeature {
   get isEnabled() { return this.config.loadFonts }
 
   devDependencies = ['file-loader']
-  test = /\.(woff|woff2|eot|ttf|otf)$/
+  test = new RegExpLiteral(/\.(woff|woff2|eot|ttf|otf)$/)
   use = ['file-loader']
 }
 
@@ -102,7 +101,7 @@ class WebpackCsvFeature extends WebpackRuleFeature {
   get isEnabled() { return this.config.loadCsv }
 
   devDependencies = ['csv-loader']
-  test = /\.(csv|tsv)$/
+  test = new RegExpLiteral(/\.(csv|tsv)$/)
   use = ['csv-loader']
 }
 
@@ -112,7 +111,7 @@ class WebpackXmlFeature extends WebpackRuleFeature {
   get isEnabled() { return this.config.loadXml }
 
   devDependencies = [ 'xml-loader' ]
-  test = /\.xml$/
+  test = new RegExpLiteral(/\.xml$/)
   use = ['xml-loader']
 }
 

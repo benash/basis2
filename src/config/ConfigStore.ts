@@ -3,6 +3,7 @@ import { YarnPackageManager, NpmPackageManager, NoopPackageManager, } from './Pa
 import { WebpackBuildSystem, NoopBuildSystem, } from './build-system'
 import { BabelTranspiler, NoopTranspiler } from './Transpiler'
 import { ConfigFile } from './ConfigFile'
+import { HasConfigs } from './interfaces';
 
 export interface WebpackConfig {
   entry: string
@@ -69,11 +70,25 @@ export default class ConfigStore {
     return new NoopTranspiler()
   }
 
+  @computed get htmlPage() {
+    return new HtmlPage(this.webpackConfig)
+  }
+
   @computed get configFiles() {
-    return new Array<ConfigFile>().concat(
-      this.packageManager.configs(),
-      this.buildSystem.configs(),
-      this.transpiler.configs(),
-    )
+    return [
+      this.packageManager,
+      this.buildSystem,
+      this.transpiler,
+      // this.htmlPage,
+    ]
+    .map(a => a.configs())
+    .reduce((acc, cur) => acc.concat(cur))
   }
 }
+
+  class HtmlPage implements HasConfigs {
+    configs(): ConfigFile[] {
+      throw new Error("Method not implemented.");
+    }
+    constructor(webpackConfig: WebpackConfig) {}
+  }

@@ -30,7 +30,7 @@ export class WebpackBuildSystem implements BuildSystem {
     return this.enabledFeatures
       .map(f => f.partialFileContents)
       .reduce((acc, contents) => acc.merge(contents))
-      .serialize()
+      .prettified
   }
 
   configs(): ConfigFile[] {
