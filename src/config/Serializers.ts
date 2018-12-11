@@ -1,89 +1,139 @@
-const singleLineMaxSize = 70
-
 class Surround {
-  constructor(public l: string, public r: string) {}
+  constructor(public left: string, public right: string) {}
+}
 
-  static get Array() { return new Surround('[', ']') }
-  static get Object() { return new Surround('{', '}') }
+abstract class SerializableContainer<T, E> {
+  static singleLineMaxSize = 60
+
+  constructor(protected container: T) {}
+
+  abstract surround: Surround
+  abstract compactIndent: Indent
+  abstract get elements(): E[]
+  protected abstract serializeElement(e: E, indent: Indent): string
+
+  serialize(indent: Indent) {
+    const singleLine = this.serializeFixedIndent(this.compactIndent)
+
+    if (singleLine.length <= SerializableContainer.singleLineMaxSize) {
+      return singleLine
+    }
+
+    return this.serializeFixedIndent(indent)
+  }
+
+  serializeFixedIndent(indent: Indent) {
+    return this.surround.left + indent.leftPadding + indent.horizontal +
+      this.elements
+        .map(e => this.serializeElement(e, indent.increase()))
+        .join(',' + indent.vertical + indent.horizontal) +
+      indent.rightPadding + indent.decrease().horizontal + this.surround.right
+  }
+}
+
+class SerializableArray extends SerializableContainer<Array<any>, any> {
+  surround = new Surround('[', ']')
+  compactIndent = Indent.SingleLineUnpadded
+
+  get elements() { return this.container }
+
+  serializeElement(e, indent) {
+    return serializeAny(e, indent)
+  }
+}
+
+class SerializableObject extends SerializableContainer<Object, [string, any]> {
+  surround = new Surround('{', '}')
+  compactIndent = Indent.SingleLinePadded
+
+  get elements() { return Object.entries(this.container) }
+
+  serializeElement([key, val]: [string, any], indent) {
+    return `${key}: ${serializeAny(val, indent)}`
+  }
 }
 
 class Indent {
   constructor(
     public hSeparator: string,
     public vSeparator: string,
+    public leftPadding: string,
+    public rightPadding: string,
     public level: number
   ) {}
 
-  get hIndent() {
+  get horizontal() {
     return this.hSeparator.repeat(this.level)
   }
 
-  get vIndent() {
+  get vertical() {
     return this.vSeparator
   }
 
-  serializeElements(surround: Surround, elements: string[]) {
-    console.log(typeof elements)
-    return surround.l + this.vIndent +
-      this.hIndent + elements.join(',' + this.vIndent + this.hIndent) + this.vIndent +
-      this.decrease().hIndent + surround.r
-  }
-
   increase() {
-    return new Indent(this.hSeparator, this.vSeparator, this.level + 1)
+    return new Indent(
+      this.hSeparator,
+      this.vSeparator,
+      this.leftPadding,
+      this.rightPadding,
+      this.level + 1,
+    )
   }
 
   decrease() {
-    return new Indent(this.hSeparator, this.vSeparator, Math.max(0, this.level - 1))
+    return new Indent(
+      this.hSeparator,
+      this.vSeparator,
+      this.leftPadding,
+      this.rightPadding,
+      Math.max(0, this.level - 1)
+    )
   }
 
-  static multiLine(level: number) { 
-    return new Indent('  ', '\n', level)
-  }
-
-  static get SingleLine() {
-    return new Indent('', '', 0)
+  static MultiLine(level: number) { 
+    return new Indent(
+      '  ',
+      '\n',
+      '\n',
+      '\n',
+      level,
+    )
   }
 
   // 'Vertical' spaces used to pad the insides of literals
   static get SingleLinePadded() {
-    return new Indent('', ' ', 0)
+    return new Indent(
+      '',
+      ' ',
+      ' ',
+      ' ',
+      0,
+    )
+  }
+
+  static get SingleLineUnpadded() {
+    return new Indent(
+      '',
+      ' ',
+      '',
+      '',
+      0,
+    )
   }
 }
 
 export const serialize = (a: any) =>
-  serializeAny(a, Indent.multiLine(1))
+  serializeAny(a, Indent.MultiLine(1))
 
 function serializeAny(a: any, indent: Indent) {
   if (a instanceof RegExp) {
     return a
   }
   if (a instanceof Array) {
-    return serializeArray(a, indent)
+    return new SerializableArray(a).serialize(indent)
   }
   if (a instanceof Object) {
-    return serializeObject(a, indent)
+    return new SerializableObject(a).serialize(indent)
   }
   return a
-}
-
-const serializeArray = (arr: Array<any>, indent: Indent) =>
-  serializeContainer(arr, Surround.Array, indent, (a, ind) => a.map(el => serializeAny(el, ind)))
-
-const serializeObject = (o: object, indent: Indent) =>
-  serializeContainer(o, Surround.Object, indent, (o, ind) =>
-    Object.entries(o).map(([key, val]) => `${key}: ${serializeAny(val, ind)}`))
-
-function serializeContainer(container: any, surround: Surround, indent: Indent, fn: (c, ind) => string[] ) {
-  const singleLine = serializeFixedIndentContainer(container, surround, Indent.SingleLine, fn)
-
-  if (singleLine.length <= singleLineMaxSize) {
-    return singleLine
-  }
-
-  return serializeFixedIndentContainer(container, surround, indent, fn)
-}
-
-const serializeFixedIndentContainer = (c: any, surround: Surround, indent: Indent, fn: (c, indent: Indent) => string[]) => {
-  return indent.serializeElements(surround, fn(c, indent.increase()))
 }
