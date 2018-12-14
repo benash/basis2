@@ -1,21 +1,21 @@
+import babylon from 'prettier/parser-babylon'
+import prettier from 'prettier/standalone'
+
 import { merge as _merge } from '../utils'
 import { Require } from './Require'
-import prettier from 'prettier/standalone'
-import babylon from 'prettier/parser-babylon'
-
-interface PartialJsConfigFileI {
-  requires: Require[]
-  configObj: object
-}
 
 export class PartialJsConfigFile {
-  constructor(protected partialFile: PartialJsConfigFileI) { }
+  static Empty() {
+    return new PartialJsConfigFile([], {})
+  }
+
+  constructor(public requires: Require[], public configObj: object) { }
 
   merge(other: PartialJsConfigFile): PartialJsConfigFile {
-    return new PartialJsConfigFile({
-      requires: this.partialFile.requires.concat(other.partialFile.requires),
-      configObj: _merge(this.partialFile.configObj, other.partialFile.configObj),
-    })
+    return new PartialJsConfigFile(
+      this.requires.concat(other.requires),
+      _merge(this.configObj, other.configObj),
+    )
   }
 
   serialize() {
@@ -23,44 +23,40 @@ export class PartialJsConfigFile {
   }
 
   get serializedRequires() {
-    return this.partialFile.requires.map(r => r.serialize()).join('\n')
+    return this.requires.map(r => r.serialize()).join('\n')
   }
 
   get serializedExports() {
-    return `module.exports = ${Literal.serialize(this.partialFile.configObj)}`
+    return `module.exports = ${Literal.serialize(this.configObj)}`
   }
 
   get prettified() {
     return prettier.format(this.serialize(), {
       parser: 'babylon',
       plugins: [ babylon ],
-      singleQuote: true,
-      semi: false,
       printWidth: 70,
-    })
-  }
-
-  static empty() {
-    return new PartialJsConfigFile({
-      requires: [],
-      configObj: {},
+      semi: false,
+      singleQuote: true,
     })
   }
 }
 
 export class Literal {
-  constructor(private s: string) {}
-  toJSON() {
-    return `@@${this.s}@@`
+  static serialize(o: object) {
+    return JSON.stringify(o)
+      .replace(/~\\\\~/g, '\\')
+      .replace(/"@@(.*?)@@"/g, '$1')
   }
 
-  static serialize(o) {
-    return JSON.stringify(o)
-      .replace(/\\\\/g, '\\')
-      .replace(/"@@(.*?)@@"/g, '$1')
+  constructor(private s: string) {}
+
+  toJSON() {
+    return `@@${this.s}@@`
   }
 }
 
 export class RegExpLiteral extends Literal {
-  constructor(private r: RegExp) { super(r.toString()) }
+  constructor(private r: RegExp) {
+    super(r.toString().replace(/\\/g, '~\\~'))
+  }
 }

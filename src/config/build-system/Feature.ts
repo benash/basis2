@@ -1,5 +1,5 @@
 import { PartialJsConfigFile, Literal, RegExpLiteral } from '../PartialJsConfigFile'
-import { WebpackConfig } from '../ConfigStore';
+import { WebpackConfig } from '../ConfigStore'
 import { PlainRequire, Require, CamelizedRequire } from '../Require'
 
 export abstract class Feature {
@@ -7,6 +7,9 @@ export abstract class Feature {
   devDependencies: string[]
   partialFileContents: PartialJsConfigFile
 
+}
+
+export class WebpackBaseFeature implements Feature {
   static allFeatures(config: WebpackConfig): Feature[]  {
     return [
       WebpackBaseFeature,
@@ -19,26 +22,23 @@ export abstract class Feature {
       WebpackHtmlFeature,
     ].map(F => new F(config))
   }
-}
-
-class WebpackBaseFeature implements Feature {
-  constructor(private config: WebpackConfig) { }
 
   isEnabled = true
-
   devDependencies = ['webpack', 'webpack-cli']
 
+  constructor(private config: WebpackConfig) { }
+
   get partialFileContents() {
-    return new PartialJsConfigFile({
-      requires: [new PlainRequire('path')],
-      configObj: {
+    return new PartialJsConfigFile(
+      [ new PlainRequire('path') ],
+      {
         entry: this.config.entry,
         output: {
           filename: this.config.outputFilename,
-          path: new Literal(`path.resolve(__dirname, '${this.config.outputPath}')`)
-        }
-      }
-    })
+          path: new Literal(`path.resolve(__dirname, '${this.config.outputPath}')`),
+        },
+      },
+    )
   }
 }
 
@@ -49,70 +49,70 @@ abstract class WebpackRuleFeature implements Feature {
   devDependencies: string[]
 
   get partialFileContents() {
-    return new PartialJsConfigFile({
-      requires: [],
-      configObj: {
+    return new PartialJsConfigFile(
+      [],
+      {
         module: {
           rules: [
             {
               test: this.test,
-              use: this.use
-            }
-          ]
-        }
-      }
-    })
+              use: this.use,
+            },
+          ],
+        },
+      },
+    )
   }
 }
 
 class WebpackCssFeature extends WebpackRuleFeature {
+  devDependencies = [ 'style-loader', 'css-loader' ]
+  test = new RegExpLiteral(/\.css$/)
+  use = ['style-loader', 'css-loader']
+
   constructor(private webpackConfig: WebpackConfig) { super() }
 
   get isEnabled() { return this.webpackConfig.loadCss }
-
-  devDependencies = ['style-loader', 'css-loader']
-  test = new RegExpLiteral(/\.css$/)
-  use = ['style-loader', 'css-loader']
 }
 
 class WebpackImagesFeature extends WebpackRuleFeature {
-  constructor(private config: WebpackConfig) { super() }
-
-  get isEnabled() { return this.config.loadImages }
-
   devDependencies = ['file-loader']
   test = new RegExpLiteral(/\.(png|svg|jpg|gif)$/)
   use = ['file-loader']
+
+  constructor(private config: WebpackConfig) { super() }
+
+  get isEnabled() { return this.config.loadImages }
 }
 
 class WebpackFontsFeature extends WebpackRuleFeature {
-  constructor(private config: WebpackConfig) { super() }
-
-  get isEnabled() { return this.config.loadFonts }
-
   devDependencies = ['file-loader']
   test = new RegExpLiteral(/\.(woff|woff2|eot|ttf|otf)$/)
   use = ['file-loader']
+
+  constructor(private config: WebpackConfig) { super() }
+
+  get isEnabled() { return this.config.loadFonts }
 }
 
 class WebpackCsvFeature extends WebpackRuleFeature {
-  constructor(private config: WebpackConfig) { super() }
-
-  get isEnabled() { return this.config.loadCsv }
-
   devDependencies = ['csv-loader']
   test = new RegExpLiteral(/\.(csv|tsv)$/)
   use = ['csv-loader']
+
+  constructor(private config: WebpackConfig) { super() }
+
+  get isEnabled() { return this.config.loadCsv }
 }
 
 class WebpackXmlFeature extends WebpackRuleFeature {
-  constructor(private config: WebpackConfig) { super() }
-
-  get isEnabled() { return this.config.loadXml }
-
   devDependencies = [ 'xml-loader' ]
   test = new RegExpLiteral(/\.xml$/)
   use = ['xml-loader']
+
+  constructor(private config: WebpackConfig) { super() }
+
+  get isEnabled() { return this.config.loadXml }
 }
 
 abstract class WebpackPluginFeature implements Feature {
@@ -122,31 +122,31 @@ abstract class WebpackPluginFeature implements Feature {
   abstract plugin: string
 
   get partialFileContents() {
-    return new PartialJsConfigFile({
-      requires: this.requires,
-      configObj: {
-        plugins: [ this.plugin ]
-      }
-    })
+    return new PartialJsConfigFile(
+      this.requires,
+      {
+        plugins: [ this.plugin ],
+      },
+    )
   }
 }
 
 class WebpackHtmlFeature extends WebpackPluginFeature {
+  requires = [ new CamelizedRequire('html-webpack-plugin') ]
+  devDependencies = [ 'html-webpack-plugin' ]
+  plugin = "new HtmlWebpackPlugin({ title: 'My First App' })"
+
   constructor(private config: WebpackConfig) { super() }
 
   get isEnabled() { return this.config.useHtmlPlugin }
-
-  requires = [ new CamelizedRequire('html-webpack-plugin') ]
-  devDependencies = [ 'html-webpack-plugin' ]
-  plugin = `new HtmlWebpackPlugin({ title: 'My First App' })`
 }
 
 class WebpackCleanFeature extends WebpackPluginFeature {
-  constructor(private config: WebpackConfig) { super() }
-
-  get isEnabled() { return this.config.useCleanPlugin }
-
   requires = [ new CamelizedRequire('clean-webpack-plugin') ]
   devDependencies = [ 'clean-webpack-plugin' ]
   plugin = `new CleanWebpackPlugin('${this.config.outputPath}')`
+
+  constructor(private config: WebpackConfig) { super() }
+
+  get isEnabled() { return this.config.useCleanPlugin }
 }

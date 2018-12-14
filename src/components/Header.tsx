@@ -1,18 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
 import styled from 'styled-components'
 
-Header.propTypes = {
-  className: PropTypes.string,
-}
-
-function Header({ className, }) {
-  return <header className={className}>
+const Header = (props: {className: string}) => (
+  <header className={props.className}>
     <h1>Config Generator</h1>
     <p>Create web projects easily. Without magic.</p>
   </header>
-}
+)
 
 export default styled(Header)`
   background-color: ${props => props.theme.darkPurple};
@@ -35,4 +29,4 @@ export default styled(Header)`
     margin-top: 0.6em;
     margin-bottom: 0;
   }
-` 
+`

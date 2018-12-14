@@ -1,7 +1,7 @@
 import { HasDependencies, HasConfigs, } from '../interfaces'
 import { ConfigFile } from '../ConfigFile'
 import { WebpackConfig } from '../ConfigStore';
-import { Feature } from './Feature';
+import { Feature, WebpackBaseFeature } from './Feature';
 
 interface BuildSystem extends HasDependencies, HasConfigs {}
 
@@ -22,7 +22,7 @@ export class WebpackBuildSystem implements BuildSystem {
   }
 
   private get enabledFeatures(): Feature[] {
-    return Feature.allFeatures(this.config)
+    return WebpackBaseFeature.allFeatures(this.config)
       .filter(f => f.isEnabled)
   }
 
