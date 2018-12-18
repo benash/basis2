@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import ReactHighlight from 'react-highlight.js'
+import ReactHighlight from 'react-highlight'
 
 Highlight.propTypes = {
   className: PropTypes.string,
@@ -10,12 +10,12 @@ Highlight.propTypes = {
   children: PropTypes.node,
 }
 
-function Highlight(props) {
-  return <ReactHighlight className={props.className} language={props.language}>
-    {React.Children.toArray(props.children).join('')}
-  </ReactHighlight>
-}
-
-export default styled(Highlight)`
+const StyledHighlight = styled(ReactHighlight)`
   font-size: 0.8em;
 `
+
+export default function Highlight(props) {
+  return <StyledHighlight className={props.language} language={props.language}>
+    {React.Children.toArray(props.children).join('')}
+  </StyledHighlight>
+}
