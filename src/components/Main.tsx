@@ -11,7 +11,11 @@ const StyledMain = styled.main`
 
   > section {
     width: 50%;
-    margin: 2em;
+    margin: 0 auto;
+
+    section {
+      margin: 2em;
+    }
   }
 
   h3 {
