@@ -1,14 +1,11 @@
 import { observer } from 'mobx-react'
 import * as React from 'react'
 
-import ConfigStore from '../../config/ConfigStore'
-import Config from './Config'
+import { Config } from './Config'
+import { ConfigStore } from '../../config/ConfigStore'
 
-const GeneratedCode = (props: {store: ConfigStore}) => {
-  return (
+export const GeneratedCode = observer((props: {store: ConfigStore}) => (
   <div className='generated-code'>
     {props.store.configFiles.map(file => <Config file={file} key={file.name} />)}
   </div>
-)
-  }
-export default observer(GeneratedCode)
+))

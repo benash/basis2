@@ -10,6 +10,10 @@ export class NoopBuildSystem implements BuildSystem {
   configs = () => []
 }
 
+interface Hash<T> {
+  [key: string]: T
+}
+
 export class WebpackBuildSystem implements BuildSystem {
   constructor(private config: WebpackConfig) {}
 
@@ -17,7 +21,10 @@ export class WebpackBuildSystem implements BuildSystem {
     const obj = this.enabledFeatures
       .map(f => f.devDependencies)
       .reduce((acc, x) => acc.concat(x))
-      .reduce((acc, x) => { acc[x] = true; return acc }, <{[key: string]: boolean}>{} )
+      .reduce(
+        (acc, x) => { acc[x] = true; return acc },
+        {} as Hash<boolean>,
+      )
     return Object.entries(obj).map(([k, v]) => k)
   }
 

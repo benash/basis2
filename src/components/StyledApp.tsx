@@ -1,11 +1,11 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
 
-import App from './App'
-
 import 'normalize.css'
 import 'highlight.js/styles/vs2015.css'
 import '../global.scss'
+
+import { App } from './App'
 
 const theme = {
   darkGrey: '#403332',
@@ -15,7 +15,7 @@ const theme = {
   mediumPurple: '#6649a6',
 }
 
-export default () => (
+export const StyledApp = () => (
   <ThemeProvider theme={theme}>
     <App />
   </ThemeProvider>

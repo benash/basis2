@@ -4,7 +4,7 @@ import { JsonConfigFile } from './ConfigFile'
 interface Transpiler extends HasDependencies, HasConfigs {}
 
 export class BabelTranspiler implements Transpiler {
-  devDependencies: string[] = [ 'babel-loader', '@babel/core', '@babel/preset-env', ]
+  devDependencies: string[] = [ 'babel-loader', '@babel/core', '@babel/preset-env' ]
   dependencies = []
   configs() {
     return [
@@ -12,7 +12,7 @@ export class BabelTranspiler implements Transpiler {
         presets: [
           '@babel/preset-env',
         ],
-      })
+      }),
     ]
   }
 }

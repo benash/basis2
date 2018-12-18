@@ -8,11 +8,7 @@ interface SelectProps {
 }
 
 @observer
-class Select extends React.Component<SelectProps> {
-  changeVal(e: React.FormEvent<HTMLSelectElement>) {
-    this.props.container[name] = e.currentTarget.value
-  }
-
+export class Select extends React.Component<SelectProps> {
   render() {
     const { name, container, children } = this.props
     return (
@@ -26,5 +22,3 @@ class Select extends React.Component<SelectProps> {
     )
   }
 }
-
-export default Select

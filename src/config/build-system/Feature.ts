@@ -9,18 +9,22 @@ export abstract class Feature {
 
 }
 
+interface Class<T> { new(...args: any[]): T }
+
+const features: () => Array<Class<Feature>> = () => [
+  WebpackBaseFeature,
+  WebpackCssFeature,
+  WebpackImagesFeature,
+  WebpackFontsFeature,
+  WebpackCsvFeature,
+  WebpackXmlFeature,
+  WebpackCleanFeature,
+  WebpackHtmlFeature,
+]
+
 export class WebpackBaseFeature implements Feature {
   static allFeatures(config: WebpackConfig): Feature[]  {
-    return [
-      WebpackBaseFeature,
-      WebpackCssFeature,
-      WebpackImagesFeature,
-      WebpackFontsFeature,
-      WebpackCsvFeature,
-      WebpackXmlFeature,
-      WebpackCleanFeature,
-      WebpackHtmlFeature,
-    ].map(F => new F(config))
+    return features().map(F => new F(config))
   }
 
   isEnabled = true

@@ -6,12 +6,10 @@ const StyledHighlight = styled(ReactHighlight)`
   font-size: 0.8em;
 `
 
-const Highlight: React.SFC<{ language: string }> = (props) => {
+export const Highlight: React.SFC<{ language: string }> = (props) => {
   return (
     <StyledHighlight className={props.language}>
       {React.Children.toArray(props.children).join('')}
     </StyledHighlight>
   )
 }
-
-export default Highlight

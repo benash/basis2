@@ -1,16 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 
-export default function() {
-  return (
-    <Header>
-      <h1>Config Generator</h1>
-      <p>Create web projects easily. Without magic.</p>
-    </Header>
-  )
-}
-
-const Header = styled.header`
+const StyledHeader = styled.header`
   background-color: ${props => props.theme.darkPurple};
   overflow: hidden;
   text-align: center;
@@ -32,3 +23,10 @@ const Header = styled.header`
     margin-bottom: 0;
   }
 `
+
+export const Header = () => (
+  <StyledHeader>
+    <h1>Config Generator</h1>
+    <p>Create web projects easily. Without magic.</p>
+  </StyledHeader>
+)

@@ -1,9 +1,9 @@
-import { observable, computed, } from 'mobx'
-import { YarnPackageManager, NpmPackageManager, NoopPackageManager, } from './PackageManager'
-import { WebpackBuildSystem, NoopBuildSystem, } from './build-system'
+import { observable, computed } from 'mobx'
+import { YarnPackageManager, NpmPackageManager, NoopPackageManager } from './PackageManager'
+import { WebpackBuildSystem, NoopBuildSystem } from './build-system'
 import { BabelTranspiler, NoopTranspiler } from './Transpiler'
 import { ConfigFile } from './ConfigFile'
-import { HasConfigs } from './interfaces';
+import { HasConfigs } from './interfaces'
 
 export interface WebpackConfig {
   entry: string
@@ -18,7 +18,7 @@ export interface WebpackConfig {
   useHtmlPlugin: boolean
 }
 
-export default class ConfigStore {
+export class ConfigStore {
   id = Math.random()
   @observable packageManagerName = 'yarn'
   @observable useWebpack = true
@@ -86,9 +86,9 @@ export default class ConfigStore {
   }
 }
 
-  class HtmlPage implements HasConfigs {
-    configs(): ConfigFile[] {
-      throw new Error("Method not implemented.");
-    }
-    constructor(webpackConfig: WebpackConfig) {}
+class HtmlPage implements HasConfigs {
+  constructor(public webpackConfig: WebpackConfig) {}
+  configs(): ConfigFile[] {
+    throw new Error('Method not implemented.')
   }
+}

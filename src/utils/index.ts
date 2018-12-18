@@ -1,4 +1,4 @@
-type Mergable = { [key: string]: any }
+interface Mergable { [key: string]: any }
 
 export function merge(dest: Mergable, src: Mergable) {
   const copy = overwrite({}, dest)
@@ -12,12 +12,7 @@ function overwrite(dest: Mergable, src: Mergable): Mergable  {
 
 function mergeInto(dest: Mergable, pair: [string, any]) {
   const [key, val] = pair
-  if (dest.hasOwnProperty(key)) {
-    dest[key] = mergeVals(dest[key], val)
-  }
-  else {
-    dest[key] = val
-  }
+  dest[key] = dest.hasOwnProperty(key) ? mergeVals(dest[key], val) : val
 }
 
 function mergeVals(dest: any, src: any) {
@@ -33,8 +28,7 @@ function mergeVals(dest: any, src: any) {
   if (dest instanceof Array) {
     if (src instanceof Array) {
       src.forEach(e => dest.push(clone(e)))
-    }
-    else {
+    } else {
       dest.concat(clone(src))
     }
     return dest

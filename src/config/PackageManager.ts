@@ -1,11 +1,11 @@
-import { HasConfigs, HasDependencies } from "./interfaces";
-import { ConfigFile } from "./ConfigFile";
+import { HasConfigs, HasDependencies } from './interfaces'
+import { ConfigFile } from './ConfigFile'
 
 interface PackageManagerI extends HasConfigs, HasDependencies {}
 
 abstract class PackageManager implements PackageManagerI {
   constructor(public devDependencies: string[]) {}
-  abstract configs(): Array<ConfigFile>
+  abstract configs(): ConfigFile[]
 }
 
 class PackageManagerConfigFile implements ConfigFile {
@@ -21,7 +21,7 @@ class PackageManagerConfigFile implements ConfigFile {
 export class YarnPackageManager extends PackageManager {
   configs() {
     return [
-      new PackageManagerConfigFile(`yarn add -D ${this.devDependencies.join(' ')}`)
+      new PackageManagerConfigFile(`yarn add -D ${this.devDependencies.join(' ')}`),
     ]
   }
 }
@@ -29,7 +29,7 @@ export class YarnPackageManager extends PackageManager {
 export class NpmPackageManager extends PackageManager {
   configs() {
     return [
-      new PackageManagerConfigFile(`npm install ${this.devDependencies.join(' ')} --save-dev`)
+      new PackageManagerConfigFile(`npm install ${this.devDependencies.join(' ')} --save-dev`),
     ]
   }
 }
