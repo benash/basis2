@@ -5,23 +5,7 @@ import ConfigStore from '../config/ConfigStore'
 import ConfigForm from './config-form'
 import GeneratedCode from './generated-code'
 
-class Main extends React.Component<{className: string}> {
-  public a = this.props.className
-  private store = new ConfigStore()
-
-  public render = () => (
-    <main className={this.props.className}>
-      <section>
-        <ConfigForm store={this.store} />
-      </section>
-      <section>
-        <GeneratedCode store={this.store} />
-      </section>
-    </main>
-  )
-}
-
-export default styled(Main)`
+const Main = styled.main`
   display: flex;
   text-align: center;
   margin: 0;
@@ -35,3 +19,20 @@ export default styled(Main)`
     text-align: left;
   }
 `
+
+export default class extends React.Component {
+  private store = new ConfigStore()
+
+  public render() {
+    return (
+      <Main>
+        <section>
+          <ConfigForm store={this.store} />
+        </section>
+        <section>
+          <GeneratedCode store={this.store} />
+        </section>
+      </Main>
+    )
+  }
+}

@@ -1,14 +1,17 @@
-export function merge(dest: object, src: object) {
+type Mergable = { [key: string]: any }
+
+export function merge(dest: Mergable, src: Mergable) {
   const copy = overwrite({}, dest)
   return overwrite(copy, src)
 }
 
-function overwrite(dest: object, src: object): object  {
+function overwrite(dest: Mergable, src: Mergable): Mergable  {
   Object.entries(src).forEach(e => mergeInto(dest, e))
   return dest
 }
 
-function mergeInto(dest: object, [key, val]) {
+function mergeInto(dest: Mergable, pair: [string, any]) {
+  const [key, val] = pair
   if (dest.hasOwnProperty(key)) {
     dest[key] = mergeVals(dest[key], val)
   }

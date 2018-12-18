@@ -3,9 +3,9 @@ import { WebpackConfig } from '../ConfigStore'
 import { PlainRequire, Require, CamelizedRequire } from '../Require'
 
 export abstract class Feature {
-  isEnabled: boolean
-  devDependencies: string[]
-  partialFileContents: PartialJsConfigFile
+  abstract isEnabled: boolean
+  abstract devDependencies: string[]
+  abstract partialFileContents: PartialJsConfigFile
 
 }
 
@@ -43,10 +43,10 @@ export class WebpackBaseFeature implements Feature {
 }
 
 abstract class WebpackRuleFeature implements Feature {
-  test: RegExpLiteral
-  use: string[]
-  isEnabled: boolean
-  devDependencies: string[]
+  abstract test: RegExpLiteral
+  abstract use: string[]
+  abstract isEnabled: boolean
+  abstract devDependencies: string[]
 
   get partialFileContents() {
     return new PartialJsConfigFile(

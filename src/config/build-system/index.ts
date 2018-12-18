@@ -1,12 +1,12 @@
-import { HasDependencies, HasConfigs, } from '../interfaces'
+import { HasDependencies, HasConfigs } from '../interfaces'
 import { ConfigFile } from '../ConfigFile'
-import { WebpackConfig } from '../ConfigStore';
-import { Feature, WebpackBaseFeature } from './Feature';
+import { WebpackConfig } from '../ConfigStore'
+import { Feature, WebpackBaseFeature } from './Feature'
 
 interface BuildSystem extends HasDependencies, HasConfigs {}
 
 export class NoopBuildSystem implements BuildSystem {
-  devDependencies: Array<string> = []
+  devDependencies: string[] = []
   configs = () => []
 }
 
@@ -17,7 +17,7 @@ export class WebpackBuildSystem implements BuildSystem {
     const obj = this.enabledFeatures
       .map(f => f.devDependencies)
       .reduce((acc, x) => acc.concat(x))
-      .reduce((acc, x) => { acc[x] = true; return acc }, {})
+      .reduce((acc, x) => { acc[x] = true; return acc }, <{[key: string]: boolean}>{} )
     return Object.entries(obj).map(([k, v]) => k)
   }
 

@@ -1,4 +1,6 @@
+ //@ts-ignore
 import babylon from 'prettier/parser-babylon'
+ //@ts-ignore
 import prettier from 'prettier/standalone'
 
 import { merge as _merge } from '../utils'

@@ -2,6 +2,9 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpack = require('webpack')
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default
+
+const styledComponentsTransformer = createStyledComponentsTransformer()
 
 module.exports = {
   mode: 'development',
@@ -20,7 +23,13 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.(t)sx?$/, use: { loader: 'awesome-typescript-loader' } },
+      {
+        test: /\.(t)sx?$/,
+        loader: 'awesome-typescript-loader',
+        options: {
+          getCustomTransformers: () => ({ before: [styledComponentsTransformer] })
+        },
+      },
       { test: /\.scss$/, use: [ 'style-loader', 'css-loader', 'sass-loader', ], },
       { test: /\.css$/, use: [ 'style-loader', 'css-loader', ], },
       // addition - add source-map support

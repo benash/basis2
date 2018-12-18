@@ -1,24 +1,24 @@
-import * as React from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-import Highlight from '../Highlight'
 import { ConfigFile } from '../../config/ConfigFile'
+import Highlight from '../Highlight'
 
-class Config extends React.Component<{ className: string, file: ConfigFile }> {
-  render() {
+const StyledSection = styled.section`
+  text-align: left;
+`
+
+export default class extends React.Component<{ file: ConfigFile }> {
+  public render() {
     const { name, contents, language } = this.props.file
 
     return (
-      <section className={this.props.className}>
+      <StyledSection>
         <h3>{name}</h3>
         <Highlight language={language}>
           {contents}
         </Highlight>
-      </section>
+      </StyledSection>
     )
   }
 }
-
-export default styled(Config)`
-  text-align: left;
-`

@@ -19,7 +19,9 @@
         "object-literal-sort-keys": false,
         "max-classes-per-file": false,
         "ordered-imports": false,
-        "jsx-alignment": true
+        "interface-name": false,
+        "jsx-alignment": true,
+        "jsx-no-lambda": false,
     },
     "rulesDirectory": []
 }
